@@ -1,0 +1,30 @@
+aid: xproapi
+name: Xproapi
+description: 'Xproapi is a company surfaced via the API Evangelist harvest backlog (source: new-submission)
+  and added to the network as a stub for full-pipeline profiling.'
+url: https://raw.githubusercontent.com/api-evangelist/xproapi/refs/heads/main/apis.yml
+x-type: company
+x-source: harvest:new-submission
+x-tier: stub
+x-tier-reason: harvest
+specificationVersion: '0.20'
+created: '2026-10-14'
+modified: '2026-10-14'
+tags:
+- Company
+apis: []
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com
+- FN: APIs.json
+  email: info@apis.io
+common:
+- type: Website
+  url: https://xproapi.com
+- type: Documentation
+  url: https://xproapi.com/docs
+x-submission-notes: 'Tracks who any X account follows / is followed by — scraping/resale of X data, surveillance
+  of third-party accounts | Kin approved listing 2026-10-14 (case-by-case: Tracks who any X account follows
+  / is followed by — scraping/resale of X data, surveillance of third-party accounts)'
+x-submission-probe: root 200, docs 200; soft-404 ok
+x-submitted-by: support@xproapi.com (apis.io/add, 2026-10-14)
