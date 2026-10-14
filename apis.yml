@@ -1,7 +1,6 @@
 aid: xproapi
 name: Xproapi
-description: 'Xproapi is a company surfaced via the API Evangelist harvest backlog (source: new-submission)
-  and added to the network as a stub for full-pipeline profiling.'
+description: 'Xproapi provides a developer API that monitors X (formerly Twitter) accounts, tracking who they follow and who follows them. It offers daily checks, alerts via Telegram, Discord, or email, and delivers follower/following data through a RESTful API. The service includes pricing tiers, a blog with updates, and clear terms and privacy policies.'
 url: https://raw.githubusercontent.com/api-evangelist/xproapi/refs/heads/main/apis.yml
 x-type: company
 x-source: harvest:new-submission
@@ -19,6 +18,8 @@ maintainers:
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: DomainSecurity
+  url: security/xproapi-domain-security.yml
 - type: Website
   url: https://xproapi.com
 - type: Documentation
