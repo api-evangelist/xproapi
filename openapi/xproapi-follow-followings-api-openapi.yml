@@ -1,0 +1,255 @@
+openapi: 3.2.0
+info:
+  title: Xproapi.com Follow, Followings API
+  description: '## Xproapi.com
+
+
+    This collection provides a comprehensive set of endpoints for interacting with the **Xproapi.com** API — a platform for accessing X (formerly Twitter) data programmatically.'
+  version: 1.0.0
+  x-apisguru-categories:
+  - developer_tools
+  - social
+  x-logo:
+    url: https://xproapi.com/apple-touch-icon.png
+    altText: Xproapi.com
+servers:
+- url: https://xproapi.com/api
+tags:
+- name: Follow, Followings
+paths:
+  /twitter/user/followers/:
+    get:
+      tags:
+      - Follow, Followings
+      summary: Followers
+      description: '## Get User Followers
+
+
+        Retrieves a paginated list of followers for a specified Twitter/X user.
+
+
+        ### Query Parameters
+
+
+        | Parameter | Type | Required | Description |
+
+        |-----------|------|----------|-------------|
+
+        | `userName` | string | ✅ Required | The Twitter/X username (without @). Example: `elonmusk` |
+
+        | `pageSize` | integer | Optional | Number of followers to return per page. Default: `200`. Max: `200` |
+
+        | `cursor` | string | Optional | Pagination cursor returned from a previous response to fetch the next page of results |
+
+
+        ### Example Request
+
+
+        ```
+
+        GET {{base_url}}/twitter/user/followers?userName=elonmusk&pageSize=200
+
+        ```
+
+
+        ### Example Response
+
+
+        Returns a list of follower user objects, each containing:
+
+        - `id` — Twitter user ID
+
+        - `name` — Display name
+
+        - `userName` — Username handle
+
+        - `followersCount` — Number of followers
+
+        - `followingCount` — Number of accounts following
+
+        - `isVerified` — Verification status
+
+        - `cursor` — Pagination cursor for the next page'
+      parameters:
+      - name: x-api-key
+        in: header
+        schema:
+          type: string
+        example: '{{key}}'
+      - name: userName
+        in: query
+        schema:
+          type: string
+        example: elonmusk
+      - name: pageSize
+        in: query
+        schema:
+          type: integer
+        example: '200'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+      operationId: getTwitterUserFollowers
+      x-operation-id-source: derived
+  /twitter/user/followings:
+    get:
+      tags:
+      - Follow, Followings
+      summary: Get Followings
+      description: '## Get User Followings
+
+
+        Retrieves a paginated list of accounts that a specified Twitter/X user is following.
+
+
+        ### Query Parameters
+
+
+        | Parameter | Type | Required | Description |
+
+        |-----------|------|----------|-------------|
+
+        | `userName` | string | ✅ Required | The Twitter/X username (without @). Example: `elonmusk` |
+
+        | `pageSize` | integer | Optional | Number of followings to return per page. Default: `200`. Max: `200` |
+
+        | `cursor` | string | Optional | Pagination cursor returned from a previous response to fetch the next page of results |
+
+
+        ### Example Request
+
+
+        ```
+
+        GET {{base_url}}/twitter/user/followings?userName=elonmusk&pageSize=200
+
+        ```
+
+
+        ### Example Response
+
+
+        Returns a list of following user objects, each containing:
+
+        - `id` — Twitter user ID
+
+        - `name` — Display name
+
+        - `userName` — Username handle
+
+        - `followersCount` — Number of followers
+
+        - `followingCount` — Number of accounts following
+
+        - `isVerified` — Verification status
+
+        - `cursor` — Pagination cursor for the next page'
+      parameters:
+      - name: X-API-Key
+        in: header
+        schema:
+          type: string
+        example: '{{key}}'
+      - name: userName
+        in: query
+        schema:
+          type: string
+        example: elonmusk
+      - name: cursor
+        in: query
+        schema:
+          type: string
+      - name: pageSize
+        in: query
+        schema:
+          type: integer
+        example: '200'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+      operationId: getTwitterUserFollowings
+      x-operation-id-source: derived
+  /twitter/user/followers:
+    get:
+      tags:
+      - Follow, Followings
+      summary: Get Followers
+      description: '## Get User Followers
+
+
+        Retrieves a paginated list of followers for a specified Twitter/X user.
+
+
+        ### Query Parameters
+
+
+        | Parameter | Type | Required | Description |
+
+        |-----------|------|----------|-------------|
+
+        | `userName` | string | ✅ Required | The Twitter/X username (without @). Example: `elonmusk` |
+
+        | `pageSize` | integer | Optional | Number of followers to return per page. Default: `200`. Max: `200` |
+
+        | `cursor` | string | Optional | Pagination cursor returned from a previous response to fetch the next page of results |
+
+
+        ### Example Request
+
+
+        ```
+
+        GET {{base_url}}/twitter/user/followers?userName=elonmusk&pageSize=200
+
+        ```
+
+
+        ### Example Response
+
+
+        Returns a list of follower user objects, each containing:
+
+        - `id` — Twitter user ID
+
+        - `name` — Display name
+
+        - `userName` — Username handle
+
+        - `followersCount` — Number of followers
+
+        - `followingCount` — Number of accounts following
+
+        - `isVerified` — Verification status
+
+        - `cursor` — Pagination cursor for the next page'
+      parameters:
+      - name: X-API-Key
+        in: header
+        schema:
+          type: string
+        example: '{{key}}'
+      - name: userName
+        in: query
+        schema:
+          type: string
+        example: elonmusk
+      - name: cursor
+        in: query
+        schema:
+          type: string
+      - name: pageSize
+        in: query
+        schema:
+          type: integer
+        example: '200'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+      operationId: getTwitterUserFollowers
+      x-operation-id-source: derived

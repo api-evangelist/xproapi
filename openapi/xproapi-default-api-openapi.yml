@@ -1,0 +1,160 @@
+openapi: 3.2.0
+info:
+  title: Xproapi.com Default API
+  description: '## Xproapi.com
+
+
+    This collection provides a comprehensive set of endpoints for interacting with the **Xproapi.com** API — a platform for accessing X (formerly Twitter) data programmatically.'
+  version: 1.0.0
+  x-apisguru-categories:
+  - developer_tools
+  - social
+  x-logo:
+    url: https://xproapi.com/apple-touch-icon.png
+    altText: Xproapi.com
+servers:
+- url: https://xproapi.com/api
+tags:
+- name: Default
+paths:
+  /twitter/user/mentions:
+    get:
+      tags:
+      - Default
+      summary: Get User Mentions
+      description: '## Get User Mentions
+
+
+        Retrieves a list of tweets that mention a specified Twitter/X user.
+
+
+        ### Query Parameters
+
+
+        | Parameter | Type | Required | Description |
+
+        |-----------|------|----------|-------------|
+
+        | `userName` | string | ✅ Required | The Twitter/X username (without @). Example: `elonmusk` |
+
+        | `cursor` | string | Optional | Pagination cursor for fetching the next page of mentions |
+
+
+        ### Example Request
+
+
+        ```
+
+        GET {{base_url}}/twitter/user/mentions?userName=elonmusk
+
+        ```
+
+
+        ### Example Response
+
+
+        Returns a paginated list of tweet objects that mention the user, each containing:
+
+        - `id` — Tweet ID
+
+        - `text` — Tweet content (includes the @mention)
+
+        - `author` — Author user object (id, name, userName)
+
+        - `createdAt` — Timestamp
+
+        - `likeCount`, `replyCount`, `retweetCount` — Engagement metrics
+
+        - `cursor` — Pagination cursor for the next page'
+      parameters:
+      - name: X-API-Key
+        in: header
+        schema:
+          type: string
+        example: '{{key}}'
+      - name: userName
+        in: query
+        schema:
+          type: string
+        example: elonmusk
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+      operationId: getTwitterUserMentions
+      x-operation-id-source: derived
+  /twitter/article:
+    get:
+      tags:
+      - Default
+      summary: Get Article
+      description: '## Get Article
+
+
+        Retrieves a Twitter/X Article (long-form content) by its associated tweet ID.
+
+
+        ### Query Parameters
+
+
+        | Parameter | Type | Required | Description |
+
+        |-----------|------|----------|-------------|
+
+        | `tweet_id` | string | ✅ Required | The tweet ID associated with the article. Example: `1905545699552375179` |
+
+
+        ### Example Request
+
+
+        ```
+
+        GET {{base_url}}/twitter/article?tweet_id=1905545699552375179
+
+        ```
+
+
+        ### Notes
+
+        - Twitter/X Articles are long-form posts published natively on the platform.
+
+        - The `tweet_id` is the ID of the tweet that links to or contains the article.
+
+
+        ### Example Response
+
+
+        Returns an article object containing:
+
+        - `id` — Article ID
+
+        - `title` — Article title
+
+        - `content` — Full article content (HTML or Markdown)
+
+        - `author` — Author user object
+
+        - `createdAt` — Publication timestamp
+
+        - `coverImageUrl` — Cover image URL (if any)
+
+        - `tweetId` — Associated tweet ID'
+      parameters:
+      - name: X-API-Key
+        in: header
+        schema:
+          type: string
+        example: '{{key}}'
+      - name: tweet_id
+        in: query
+        schema:
+          type: integer
+        example: '1905545699552375179'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+      operationId: getTwitterArticle
+      x-operation-id-source: derived

@@ -1,0 +1,104 @@
+generated: '2026-10-14'
+method: derived
+generator: derive-mcp-candidate.py
+source:
+- openapi/xproapi-openapi.json
+status: candidate
+deployment:
+  mode: none
+  auth: unknown
+  verified: probed
+note: No MCP server was found. The pre-flight posted tools/list to /mcp on api.xproapi.com, xproapi.com, postman-collection.xproapi.com; verdict
+  absent. Candidate tools below are derived from the 18 operation(s) in the provider's own OpenAPI (18 listed); they describe what a server WOULD
+  expose, not one that exists.
+tools:
+- name: get_twitter_user_about
+  operationId: GET /twitter/user_about
+  method: GET
+  path: /twitter/user_about
+  description: Get User Profile About
+- name: get_user_search
+  operationId: GET /twitter/user/search
+  method: GET
+  path: /twitter/user/search
+  description: Search Users
+- name: get_user_batch_info_by_ids
+  operationId: GET /twitter/user/batch_info_by_ids
+  method: GET
+  path: /twitter/user/batch_info_by_ids
+  description: Batch User info by userids
+- name: get_user_batch_info_by_usernames
+  operationId: GET /twitter/user/batch_info_by_usernames
+  method: GET
+  path: /twitter/user/batch_info_by_usernames
+  description: Batch User Info by Usernames
+- name: get_user_info
+  operationId: GET /twitter/user/info
+  method: GET
+  path: /twitter/user/info
+  description: User info
+- name: get_user_tweet_timeline
+  operationId: GET /twitter/user/tweet_timeline
+  method: GET
+  path: /twitter/user/tweet_timeline
+  description: Get User Tweet Timeline
+- name: get_user_last_tweets
+  operationId: GET /twitter/user/last_tweets
+  method: GET
+  path: /twitter/user/last_tweets
+  description: Get User Last Tweets
+- name: get_twitter_tweets
+  operationId: GET /twitter/tweets
+  method: GET
+  path: /twitter/tweets
+  description: Get Tweets by IDs
+- name: get_tweet_advanced_search
+  operationId: GET /twitter/tweet/advanced_search
+  method: GET
+  path: /twitter/tweet/advanced_search
+  description: Advanced Search
+- name: get_replies_v2
+  operationId: GET /twitter/tweet/replies/v2
+  method: GET
+  path: /twitter/tweet/replies/v2
+  description: Get Tweet Replies v2
+- name: get_tweet_quotes
+  operationId: GET /twitter/tweet/quotes
+  method: GET
+  path: /twitter/tweet/quotes
+  description: Get Tweet Quotes
+- name: get_tweet_retweeters
+  operationId: GET /twitter/tweet/retweeters
+  method: GET
+  path: /twitter/tweet/retweeters
+  description: Get Tweet Retweeters
+- name: get_tweet_thread_context
+  operationId: GET /twitter/tweet/thread_context
+  method: GET
+  path: /twitter/tweet/thread_context
+  description: Get Tweet Thread Context
+- name: get_tweet_replies
+  operationId: GET /twitter/tweet/replies
+  method: GET
+  path: /twitter/tweet/replies
+  description: Get Tweet Replies
+- name: get_user_followers
+  operationId: GET /twitter/user/followers/
+  method: GET
+  path: /twitter/user/followers/
+  description: Followers
+- name: get_user_followings
+  operationId: GET /twitter/user/followings
+  method: GET
+  path: /twitter/user/followings
+  description: Get Followings
+- name: get_user_mentions
+  operationId: GET /twitter/user/mentions
+  method: GET
+  path: /twitter/user/mentions
+  description: Get User Mentions
+- name: get_twitter_article
+  operationId: GET /twitter/article
+  method: GET
+  path: /twitter/article
+  description: Get Article

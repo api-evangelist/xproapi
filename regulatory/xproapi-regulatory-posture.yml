@@ -1,0 +1,24 @@
+generated: '2026-10-14'
+source: https://xproapi.com/privacy
+method: probed
+signals:
+  data_retention:
+    - source: https://xproapi.com/privacy
+      http_status: 200
+      fetched: true
+      quote: "HTTP Request Logs: Detailed server request logs are retained for 14 days for security and debugging, after which they are automatically pruned."
+      section: "4. Data Retention & Pruning"
+      note: Retains request logs for 14 days, then prunes.
+    - source: https://xproapi.com/privacy
+      http_status: 200
+      fetched: true
+      quote: "Admin & Security Activity: Login records and account audit entries are kept for 90 days."
+      section: "4. Data Retention & Pruning"
+      note: Retains admin activity logs for 90 days.
+  data_subject_request:
+    - source: https://xproapi.com/privacy
+      http_status: 200
+      fetched: true
+      quote: "Request full deletion of your account and associated tracked watchlists by contacting support."
+      section: "5. Cookies & Local Storage"
+      note: Provides a way to request account deletion.

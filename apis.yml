@@ -1,31 +1,134 @@
 aid: xproapi
+
 name: Xproapi
-description: 'Xproapi provides a developer API that monitors X (formerly Twitter) accounts, tracking who they follow and who follows them. It offers daily checks, alerts via Telegram, Discord, or email, and delivers follower/following data through a RESTful API. The service includes pricing tiers, a blog with updates, and clear terms and privacy policies.'
+
+description: Xproapi provides a developer API that monitors X (formerly Twitter) accounts, tracking who they follow and who follows them. It offers
+  daily checks, alerts via Telegram, Discord, or email, and delivers follower/following data through a RESTful API. The service includes pricing
+  tiers, a blog with updates, and clear terms and privacy policies.
+
 url: https://raw.githubusercontent.com/api-evangelist/xproapi/refs/heads/main/apis.yml
+
 x-type: company
+
 x-source: harvest:new-submission
-x-tier: stub
-x-tier-reason: harvest
+
+x-tier: profiled
+x-tier-reason: enrichment pass 2026-10-14 (modular-v1; was harvest)
+
 specificationVersion: '0.20'
+
 created: '2026-10-14'
+
 modified: '2026-10-14'
+
 tags:
 - Company
-apis: []
+- API
+- X
+- Social
+- Monitoring
+- Data
+
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
+
 common:
+- type: AgenticAccess
+  url: agentic-access/xproapi-agentic-access.yml
+- type: Spectral
+  url: rules/xproapi-rules.yml
+- type: Webhooks
+  url: asyncapi/xproapi-webhooks.yml
+- type: Conformance
+  url: conformance/xproapi-conformance.yml
+- type: LLMsTxt
+  url: llms/xproapi-llms.txt
+- type: Hosts
+  url: hosts/xproapi-hosts.yml
+- type: Vendors
+  url: vendors/xproapi-vendors.yml
+- type: Packages
+  url: packages/xproapi-packages.yml
+- type: TermsOfService
+  url: https://xproapi.com/terms
+- type: SDKs
+  url: https://xproapi.com/sdks/
+- type: PrivacyPolicy
+  url: https://xproapi.com/privacy
+- type: Login
+  url: https://xproapi.com/login/
+- type: GitHubOrganization
+  url: https://github.com/Xproapi-LLC
+- type: Blog
+  url: https://xproapi.com/blog/
+- type: GettingStarted
+  url: https://xproapi.com/blog/getting-started-track-your-first-x-account-in-five-minutes
 - type: DomainSecurity
   url: security/xproapi-domain-security.yml
 - type: Website
   url: https://xproapi.com
 - type: Documentation
   url: https://xproapi.com/docs
-x-submission-notes: 'Tracks who any X account follows / is followed by — scraping/resale of X data, surveillance
-  of third-party accounts | Kin approved listing 2026-10-14 (case-by-case: Tracks who any X account follows
-  / is followed by — scraping/resale of X data, surveillance of third-party accounts)'
+
+apis:
+- aid: xproapi:xproapi-default-api
+  name: Xproapi Default API
+  description: The default API from Xproapi — 2 operation(s) for default.
+  humanURL: https://xproapi.com/docs/
+  tags:
+  - default
+  properties:
+  - type: OpenAPI
+    url: openapi/xproapi-default-api-openapi.yml
+- aid: xproapi:xproapi-follow-followings-api
+  name: Xproapi Follow, Followings API
+  description: The Follow, Followings API from Xproapi — 3 operation(s) for follow, followings.
+  humanURL: https://xproapi.com/docs/
+  tags:
+  - Follow, Followings
+  properties:
+  - type: OpenAPI
+    url: openapi/xproapi-follow-followings-api-openapi.yml
+- aid: xproapi:xproapi-tweet-activity-api
+  name: Xproapi Tweet Activity API
+  description: The Tweet Activity API from Xproapi — 8 operation(s) for tweet activity.
+  humanURL: https://xproapi.com/docs/
+  tags:
+  - Tweet Activity
+  properties:
+  - type: OpenAPI
+    url: openapi/xproapi-tweet-activity-api-openapi.yml
+- aid: xproapi:xproapi-tweets-api
+  name: Xproapi Tweets API
+  description: The Tweets API from Xproapi — 1 operation(s) for tweets.
+  humanURL: https://xproapi.com/docs/
+  tags:
+  - Tweets
+  properties:
+  - type: OpenAPI
+    url: openapi/xproapi-tweets-api-openapi.yml
+- aid: xproapi:xproapi-users-api
+  name: Xproapi Users API
+  description: The Users API from Xproapi — 5 operation(s) for users.
+  humanURL: https://xproapi.com/docs/
+  tags:
+  - Users
+  properties:
+  - type: OpenAPI
+    url: openapi/xproapi-users-api-openapi.yml
+x-submission-notes: 'Tracks who any X account follows / is followed by — scraping/resale of X data, surveillance of third-party accounts | Kin
+  approved listing 2026-10-14 (case-by-case: Tracks who any X account follows / is followed by — scraping/resale of X data, surveillance of third-party
+  accounts)'
+
 x-submission-probe: root 200, docs 200; soft-404 ok
+
 x-submitted-by: support@xproapi.com (apis.io/add, 2026-10-14)
+x-enrichment:
+  date: '2026-10-14'
+  status: enriched
+  artifacts_added: 13
+  pass: modular-v1
+  engine: identity=local,contract=local,surfaces=local,docs=local,regulatory=local

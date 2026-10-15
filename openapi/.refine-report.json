@@ -1,0 +1,24 @@
+{
+  "provider": "xproapi",
+  "sources": [
+    "xproapi-openapi.json"
+  ],
+  "outputs": [
+    "xproapi-follow-followings-api-openapi.yml",
+    "xproapi-tweet-activity-api-openapi.yml",
+    "xproapi-tweets-api-openapi.yml",
+    "xproapi-users-api-openapi.yml",
+    "xproapi-default-api-openapi.yml"
+  ],
+  "archived": [
+    "archived openapi/xproapi-openapi.json"
+  ],
+  "errors": [],
+  "warnings": [],
+  "notes": [
+    "xproapi-openapi.json: upgraded openapi 3.0.0 -> OpenAPI 3.2.0",
+    "xproapi-openapi.json: declared missing tag: default",
+    "apis.yml register: written (+5 apis, 5 total)"
+  ],
+  "skipped": []
+}

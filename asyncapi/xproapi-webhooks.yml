@@ -1,0 +1,16 @@
+generated: '2026-10-14'
+method: searched
+generator: extract-docs-artifacts.py (local)
+source: https://xproapi.com/blog/how-to-receive-webhooks-for-x-account-changes.md
+sources:
+- https://xproapi.com/blog/how-to-receive-webhooks-for-x-account-changes.md
+- https://xproapi.com/blog/event-and-conference-marketing-with-x.md
+description: Webhooks for X account follow changes.
+events:
+- event: new_follower
+  description: Dispatched when a monitored account gains a new follower.
+- event: new_following
+  description: Dispatched when a monitored account follows a new user.
+delivery:
+  retries: Failed webhook deliveries are automatically retried; callers should store the `event_id` and treat duplicate deliveries as idempotent.
+docs: https://xproapi.com/blog/how-to-receive-webhooks-for-x-account-changes.md

@@ -1,0 +1,113 @@
+openapi: 3.2.0
+info:
+  title: Xproapi.com Tweets API
+  description: '## Xproapi.com
+
+
+    This collection provides a comprehensive set of endpoints for interacting with the **Xproapi.com** API — a platform for accessing X (formerly Twitter) data programmatically.'
+  version: 1.0.0
+  x-apisguru-categories:
+  - developer_tools
+  - social
+  x-logo:
+    url: https://xproapi.com/apple-touch-icon.png
+    altText: Xproapi.com
+servers:
+- url: https://xproapi.com/api
+tags:
+- name: Tweets
+paths:
+  /twitter/tweet/advanced_search:
+    get:
+      tags:
+      - Tweets
+      summary: Advanced Search
+      description: '## Advanced Tweet Search
+
+
+        Searches for tweets using advanced query syntax, supporting filters by user, keyword, hashtag, date range, and more.
+
+
+        ### Query Parameters
+
+
+        | Parameter | Type | Required | Description |
+
+        |-----------|------|----------|-------------|
+
+        | `query` | string | ✅ Required | Advanced search query string. Supports Twitter search operators. Example: `from:elonmusk starship` |
+
+        | `queryType` | string | Optional | Sort order of results. Values: `Latest` (default) or `Top` |
+
+        | `cursor` | string | Optional | Pagination cursor for fetching the next page of results |
+
+
+        ### Supported Query Operators
+
+
+        | Operator | Example | Description |
+
+        |----------|---------|-------------|
+
+        | `from:` | `from:elonmusk` | Tweets from a specific user |
+
+        | `to:` | `to:nasa` | Tweets replying to a user |
+
+        | `#` | `#bitcoin` | Tweets with a specific hashtag |
+
+        | `"..."` | `"climate change"` | Exact phrase match |
+
+        | `-` | `-spam` | Exclude a keyword |
+
+        | `lang:` | `lang:en` | Filter by language |
+
+
+        ### Example Request
+
+
+        ```
+
+        GET {{base_url}}/twitter/tweet/advanced_search?query=from:elonmusk%20starship&queryType=Latest
+
+        ```
+
+
+        ### Example Response
+
+
+        Returns a paginated list of matching tweet objects, each containing:
+
+        - `id` — Tweet ID
+
+        - `text` — Tweet content
+
+        - `author` — Author user object
+
+        - `createdAt` — Timestamp
+
+        - `likeCount`, `replyCount`, `retweetCount`, `viewCount` — Engagement metrics
+
+        - `cursor` — Pagination cursor for the next page'
+      parameters:
+      - name: X-API-Key
+        in: header
+        schema:
+          type: string
+        example: '{{key}}'
+      - name: query
+        in: query
+        schema:
+          type: string
+        example: from:elonmusk%20starship
+      - name: queryType
+        in: query
+        schema:
+          type: string
+        example: Latest
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+      operationId: getTwitterTweetAdvancedSearch
+      x-operation-id-source: derived

@@ -1,0 +1,567 @@
+openapi: 3.2.0
+info:
+  title: Xproapi.com Tweet Activity API
+  description: '## Xproapi.com
+
+
+    This collection provides a comprehensive set of endpoints for interacting with the **Xproapi.com** API — a platform for accessing X (formerly Twitter) data programmatically.'
+  version: 1.0.0
+  x-apisguru-categories:
+  - developer_tools
+  - social
+  x-logo:
+    url: https://xproapi.com/apple-touch-icon.png
+    altText: Xproapi.com
+servers:
+- url: https://xproapi.com/api
+tags:
+- name: Tweet Activity
+paths:
+  /twitter/user/tweet_timeline:
+    get:
+      tags:
+      - Tweet Activity
+      summary: Get User Tweet Timeline
+      description: '## Get User Tweet Timeline
+
+
+        Retrieves the tweet timeline for a specified Twitter/X user, including their tweets and retweets in chronological order.
+
+
+        ### Query Parameters
+
+
+        | Parameter | Type | Required | Description |
+
+        |-----------|------|----------|-------------|
+
+        | `userName` | string | ✅ Required | The Twitter/X username (without @). Example: `elonmusk` |
+
+        | `cursor` | string | Optional | Pagination cursor for fetching the next page of the timeline |
+
+
+        ### Example Request
+
+
+        ```
+
+        GET {{base_url}}/twitter/user/tweet_timeline?userName=elonmusk
+
+        ```
+
+
+        ### Example Response
+
+
+        Returns a paginated timeline of tweet objects, each containing:
+
+        - `id` — Tweet ID
+
+        - `text` — Tweet content
+
+        - `author` — Author user object
+
+        - `createdAt` — Timestamp
+
+        - `likeCount`, `replyCount`, `retweetCount`, `viewCount` — Engagement metrics
+
+        - `isRetweet` — Whether this is a retweet
+
+        - `cursor` — Pagination cursor for the next page'
+      parameters:
+      - name: X-API-Key
+        in: header
+        schema:
+          type: string
+        example: '{{key}}'
+      - name: userName
+        in: query
+        schema:
+          type: string
+        example: elonmusk
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+      operationId: getTwitterUserTweetTimeline
+      x-operation-id-source: derived
+  /twitter/user/last_tweets:
+    get:
+      tags:
+      - Tweet Activity
+      summary: Get User Last Tweets
+      description: '## Get User Last Tweets
+
+
+        Retrieves the most recent tweets posted by a specified Twitter/X user.
+
+
+        ### Query Parameters
+
+
+        | Parameter | Type | Required | Description |
+
+        |-----------|------|----------|-------------|
+
+        | `userName` | string | ✅ Required | The Twitter/X username (without @). Example: `elonmusk` |
+
+        | `cursor` | string | Optional | Pagination cursor for fetching the next page of results |
+
+
+        ### Example Request
+
+
+        ```
+
+        GET {{base_url}}/twitter/user/last_tweets?userName=elonmusk
+
+        ```
+
+
+        ### Example Response
+
+
+        Returns a paginated list of the user''s most recent tweet objects, each containing:
+
+        - `id` — Tweet ID
+
+        - `text` — Tweet content
+
+        - `createdAt` — Timestamp
+
+        - `likeCount`, `replyCount`, `retweetCount`, `viewCount` — Engagement metrics
+
+        - `media` — Attached media (images, videos) if any
+
+        - `cursor` — Pagination cursor for the next page'
+      parameters:
+      - name: X-API-Key
+        in: header
+        schema:
+          type: string
+        example: '{{key}}'
+      - name: userName
+        in: query
+        schema:
+          type: string
+        example: elonmusk
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+      operationId: getTwitterUserLastTweets
+      x-operation-id-source: derived
+  /twitter/tweets:
+    get:
+      tags:
+      - Tweet Activity
+      summary: Get Tweets by IDs
+      description: '## Get Tweets by IDs
+
+
+        Retrieves detailed information for one or more tweets by their IDs in a single batch request.
+
+
+        ### Query Parameters
+
+
+        | Parameter | Type | Required | Description |
+
+        |-----------|------|----------|-------------|
+
+        | `tweet_ids` | string | ✅ Required | Comma-separated list of tweet IDs to fetch. Example: `2104402989570297895,2104396243434651759` |
+
+
+        ### Example Request
+
+
+        ```
+
+        GET {{base_url}}/twitter/tweets?tweet_ids=2104402989570297895,2104396243434651759
+
+        ```
+
+
+        ### Notes
+
+        - You can pass a single tweet ID or multiple IDs separated by commas.
+
+        - Maximum recommended batch size: 100 tweet IDs per request.
+
+
+        ### Example Response
+
+
+        Returns an array of tweet objects, each containing:
+
+        - `id` — Tweet ID
+
+        - `text` — Tweet content
+
+        - `author` — Author user object (id, name, userName, followersCount)
+
+        - `createdAt` — Timestamp
+
+        - `likeCount`, `replyCount`, `retweetCount`, `viewCount` — Engagement metrics
+
+        - `media` — Attached media if any
+
+        - `urls` — Expanded URLs in the tweet'
+      parameters:
+      - name: X-API-Key
+        in: header
+        schema:
+          type: string
+        example: '{{key}}'
+      - name: tweet_ids
+        in: query
+        schema:
+          type: string
+        example: 2104402989570297895,2104396243434651759
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+      operationId: getTwitterTweets
+      x-operation-id-source: derived
+  /twitter/tweet/replies/v2:
+    get:
+      tags:
+      - Tweet Activity
+      summary: Get Tweet Replies v2
+      description: '## Get Tweet Replies (v2)
+
+
+        Retrieves replies to a specific tweet using the v2 endpoint, with support for relevance-based or latest sorting.
+
+
+        ### Query Parameters
+
+
+        | Parameter | Type | Required | Description |
+
+        |-----------|------|----------|-------------|
+
+        | `tweetId` | string | ✅ Required | The unique ID of the tweet to fetch replies for. Example: `2109692430178255016` |
+
+        | `queryType` | string | Optional | Sort order of replies. Values: `Relevance` (default) or `Latest` |
+
+        | `cursor` | string | Optional | Pagination cursor for fetching the next page of replies |
+
+
+        ### Example Request
+
+
+        ```
+
+        GET {{base_url}}/twitter/tweet/replies/v2?tweetId=2109692430178255016&queryType=Relevance
+
+        ```
+
+
+        ### Example Response
+
+
+        Returns a paginated list of reply tweet objects, each containing:
+
+        - `id` — Tweet ID
+
+        - `text` — Reply text content
+
+        - `author` — Author user object (id, name, userName)
+
+        - `createdAt` — Timestamp of the reply
+
+        - `likeCount`, `replyCount`, `retweetCount` — Engagement metrics
+
+        - `cursor` — Pagination cursor for the next page'
+      parameters:
+      - name: X-API-Key
+        in: header
+        schema:
+          type: string
+        example: '{{key}}'
+      - name: tweetId
+        in: query
+        schema:
+          type: integer
+        example: '2109692430178255016'
+      - name: queryType
+        in: query
+        schema:
+          type: string
+        example: Relevance
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+      operationId: getTwitterTweetRepliesV2
+      x-operation-id-source: derived
+  /twitter/tweet/quotes:
+    get:
+      tags:
+      - Tweet Activity
+      summary: Get Tweet Quotes
+      description: '## Get Tweet Quotes
+
+
+        Retrieves a list of quote tweets for a specific tweet.
+
+
+        ### Query Parameters
+
+
+        | Parameter | Type | Required | Description |
+
+        |-----------|------|----------|-------------|
+
+        | `tweetId` | string | ✅ Required | The unique ID of the tweet to fetch quote tweets for. Example: `2109692430178255016` |
+
+        | `cursor` | string | Optional | Pagination cursor for fetching the next page of results |
+
+
+        ### Example Request
+
+
+        ```
+
+        GET {{base_url}}/twitter/tweet/quotes?tweetId=2109692430178255016
+
+        ```
+
+
+        ### Example Response
+
+
+        Returns a paginated list of quote tweet objects, each containing:
+
+        - `id` — Tweet ID
+
+        - `text` — Quote tweet text
+
+        - `author` — Author user object
+
+        - `quotedTweet` — The original tweet being quoted
+
+        - `createdAt` — Timestamp
+
+        - `likeCount`, `replyCount`, `retweetCount` — Engagement metrics
+
+        - `cursor` — Pagination cursor for the next page'
+      parameters:
+      - name: X-API-Key
+        in: header
+        schema:
+          type: string
+        example: '{{key}}'
+      - name: tweetId
+        in: query
+        schema:
+          type: integer
+        example: '2109692430178255016'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+      operationId: getTwitterTweetQuotes
+      x-operation-id-source: derived
+  /twitter/tweet/retweeters:
+    get:
+      tags:
+      - Tweet Activity
+      summary: Get Tweet Retweeters
+      description: '## Get Tweet Retweeters
+
+
+        Retrieves a list of users who retweeted a specific tweet.
+
+
+        ### Query Parameters
+
+
+        | Parameter | Type | Required | Description |
+
+        |-----------|------|----------|-------------|
+
+        | `tweetId` | string | ✅ Required | The unique ID of the tweet to fetch retweeters for. Example: `2109692430178255016` |
+
+        | `cursor` | string | Optional | Pagination cursor for fetching the next page of results |
+
+
+        ### Example Request
+
+
+        ```
+
+        GET {{base_url}}/twitter/tweet/retweeters?tweetId=2109692430178255016
+
+        ```
+
+
+        ### Example Response
+
+
+        Returns a paginated list of user objects who retweeted the tweet, each containing:
+
+        - `id` — Twitter user ID
+
+        - `name` — Display name
+
+        - `userName` — Username handle
+
+        - `followersCount` — Number of followers
+
+        - `isVerified` — Verification status
+
+        - `cursor` — Pagination cursor for the next page'
+      parameters:
+      - name: X-API-Key
+        in: header
+        schema:
+          type: string
+        example: '{{key}}'
+      - name: tweetId
+        in: query
+        schema:
+          type: integer
+        example: '2109692430178255016'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+      operationId: getTwitterTweetRetweeters
+      x-operation-id-source: derived
+  /twitter/tweet/thread_context:
+    get:
+      tags:
+      - Tweet Activity
+      summary: Get Tweet Thread Context
+      description: '## Get Tweet Thread Context
+
+
+        Retrieves the full thread context of a tweet, including parent tweets and replies in the thread chain.
+
+
+        ### Query Parameters
+
+
+        | Parameter | Type | Required | Description |
+
+        |-----------|------|----------|-------------|
+
+        | `tweetId` | string | ✅ Required | The unique ID of the tweet to fetch thread context for. Example: `2104402989570297895` |
+
+
+        ### Example Request
+
+
+        ```
+
+        GET {{base_url}}/twitter/tweet/thread_context?tweetId=2104402989570297895
+
+        ```
+
+
+        ### Example Response
+
+
+        Returns the thread context including:
+
+        - `tweet` — The requested tweet object
+
+        - `ancestors` — Array of parent tweets in the thread
+
+        - `replies` — Array of direct replies in the thread
+
+        - Each tweet contains: `id`, `text`, `author`, `createdAt`, engagement metrics'
+      parameters:
+      - name: X-API-Key
+        in: header
+        schema:
+          type: string
+        example: '{{key}}'
+      - name: tweetId
+        in: query
+        schema:
+          type: integer
+        example: '2104402989570297895'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+      operationId: getTwitterTweetThreadContext
+      x-operation-id-source: derived
+  /twitter/tweet/replies:
+    get:
+      tags:
+      - Tweet Activity
+      summary: Get Tweet Replies
+      description: '## Get Tweet Replies
+
+
+        Retrieves replies to a specific tweet.
+
+
+        ### Query Parameters
+
+
+        | Parameter | Type | Required | Description |
+
+        |-----------|------|----------|-------------|
+
+        | `tweetId` | string | ✅ Required | The unique ID of the tweet to fetch replies for. Example: `1846987139428634858` |
+
+        | `cursor` | string | Optional | Pagination cursor for fetching the next page of replies |
+
+
+        ### Example Request
+
+
+        ```
+
+        GET {{base_url}}/twitter/tweet/replies?tweetId=1846987139428634858
+
+        ```
+
+
+        ### Example Response
+
+
+        Returns a paginated list of reply tweet objects, each containing:
+
+        - `id` — Tweet ID
+
+        - `text` — Reply text content
+
+        - `author` — Author user object (id, name, userName)
+
+        - `createdAt` — Timestamp of the reply
+
+        - `likeCount`, `replyCount`, `retweetCount` — Engagement metrics
+
+        - `cursor` — Pagination cursor for the next page'
+      parameters:
+      - name: X-API-Key
+        in: header
+        schema:
+          type: string
+        example: '{{key}}'
+      - name: tweetId
+        in: query
+        schema:
+          type: integer
+        example: '1846987139428634858'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+      operationId: getTwitterTweetReplies
+      x-operation-id-source: derived

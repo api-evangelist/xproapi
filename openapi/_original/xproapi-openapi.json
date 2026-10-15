@@ -1,0 +1,763 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Xproapi.com",
+        "description": "## Xproapi.com\n\nThis collection provides a comprehensive set of endpoints for interacting with the **Xproapi.com** API — a platform for accessing X (formerly Twitter) data programmatically.\n\n### What's included\n\n- **Users** — Retrieve user profiles, search for users, and fetch batch user information by user IDs or usernames.\n    \n- **Tweets** — Access tweet timelines, fetch the latest tweets, retrieve tweets by ID, and run advanced searches.\n    \n- **Tweet Activity** — Explore tweet engagement data including replies, quotes, retweets, thread context, and user tweet timelines.\n    \n- **Follow & Followings** — Look up a user's followers and the accounts they follow.\n    \n- **Mentions** — Retrieve tweets in which a specific user has been mentioned.\n    \n- **Articles** — Fetch article content associated with a user or post.\n    \n\n### Authentication\n\nRequests use an API key passed via the `key` variable. Set the `base_url` and `key` variables in the **Production** environment before sending requests.",
+        "version": "1.0.0",
+        "x-apisguru-categories": [
+            "developer_tools",
+            "social"
+        ],
+        "x-logo": {
+            "url": "https://xproapi.com/apple-touch-icon.png",
+            "altText": "Xproapi.com"
+        }
+    },
+    "servers": [
+        {
+            "url": "https://xproapi.com/api"
+        }
+    ],
+    "tags": [
+        {
+            "name": "Users"
+        },
+        {
+            "name": "Tweets"
+        },
+        {
+            "name": "Tweet Activity"
+        },
+        {
+            "name": "Follow, Followings"
+        }
+    ],
+    "paths": {
+        "/twitter/user_about": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Get User Profile About",
+                "description": "## Get User Profile About\n\nRetrieves extended profile information and \"About\" section details for a specified Twitter/X user.\n\n### Query Parameters\n\n| Parameter | Type | Required | Description |\n|-----------|------|----------|-------------|\n| `userName` | string | ✅ Required | The Twitter/X username (without @). Example: `elonmusk` |\n\n### Example Request\n\n```\nGET {{base_url}}/twitter/user_about?userName=elonmusk\n```\n\n### Example Response\n\nReturns extended user profile data including:\n- `id` — Twitter user ID\n- `name` — Display name\n- `userName` — Username handle\n- `bio` — Profile biography\n- `location` — User's listed location\n- `website` — Profile website URL\n- `joinedDate` — Account creation date\n- `followersCount` — Number of followers\n- `followingCount` — Number of accounts following\n- `tweetsCount` — Total number of tweets\n- `isVerified` — Verification status\n- `pinnedTweet` — The user's pinned tweet (if any)",
+                "parameters": [
+                    {
+                        "name": "X-API-Key",
+                        "in": "header",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "{{key}}"
+                    },
+                    {
+                        "name": "userName",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "elonmusk"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                }
+            }
+        },
+        "/twitter/user/search": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Search Users",
+                "description": "## Search Users\n\nSearches for Twitter/X users matching a given query string.\n\n### Query Parameters\n\n| Parameter | Type | Required | Description |\n|-----------|------|----------|-------------|\n| `query` | string | ✅ Required | Search query to find users. Can be a name, username, or keyword. Example: `bitcoin` |\n| `cursor` | string | Optional | Pagination cursor for fetching the next page of results |\n\n### Example Request\n\n```\nGET {{base_url}}/twitter/user/search?query=bitcoin&cursor=\n```\n\n### Example Response\n\nReturns a paginated list of user objects matching the query, each containing:\n- `id` — Twitter user ID\n- `name` — Display name\n- `userName` — Username handle\n- `bio` — Profile biography\n- `followersCount` — Number of followers\n- `isVerified` — Verification status\n- `cursor` — Pagination cursor for the next page",
+                "parameters": [
+                    {
+                        "name": "X-API-Key",
+                        "in": "header",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "{{key}}"
+                    },
+                    {
+                        "name": "query",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "bitcoin"
+                    },
+                    {
+                        "name": "cursor",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                }
+            }
+        },
+        "/twitter/user/batch_info_by_ids": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Batch User info by userids",
+                "description": "## Batch User Info by User IDs\n\nRetrieves profile information for multiple Twitter/X users in a single request using their numeric user IDs.\n\n### Query Parameters\n\n| Parameter | Type | Required | Description |\n|-----------|------|----------|-------------|\n| `userIds` | string | ✅ Required | Comma-separated list of numeric Twitter user IDs. Example: `1655837182773563392,3295112503` |\n\n### Example Request\n\n```\nGET {{base_url}}/twitter/user/batch_info_by_ids?userIds=1655837182773563392,3295112503\n```\n\n### Notes\n- You can pass a single user ID or multiple IDs separated by commas.\n- Maximum recommended batch size: 100 user IDs per request.\n\n### Example Response\n\nReturns an array of user profile objects, each containing:\n- `id` — Twitter user ID\n- `name` — Display name\n- `userName` — Username handle\n- `bio` — Profile biography\n- `followersCount` — Number of followers\n- `followingCount` — Number of accounts following\n- `tweetsCount` — Total number of tweets\n- `isVerified` — Verification status\n- `profileImageUrl` — Profile picture URL",
+                "parameters": [
+                    {
+                        "name": "X-API-Key",
+                        "in": "header",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "{{key}}"
+                    },
+                    {
+                        "name": "userIds",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "1655837182773563392,3295112503"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                }
+            }
+        },
+        "/twitter/user/batch_info_by_usernames": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Batch User Info by Usernames",
+                "description": "## Batch User Info by Usernames\n\nRetrieves profile information for multiple Twitter/X users in a single request using their usernames.\n\n### Query Parameters\n\n| Parameter | Type | Required | Description |\n|-----------|------|----------|-------------|\n| `userNames` | string | ✅ Required | Comma-separated list of Twitter usernames (without @). Example: `elonmusk,X` |\n\n### Example Request\n\n```\nGET {{base_url}}/twitter/user/batch_info_by_usernames?userNames=elonmusk,X\n```\n\n### Notes\n- You can pass a single username or multiple usernames separated by commas.\n- Maximum recommended batch size: 100 usernames per request.\n\n### Example Response\n\nReturns an array of user profile objects, each containing:\n- `id` — Twitter user ID\n- `name` — Display name\n- `userName` — Username handle\n- `bio` — Profile biography\n- `followersCount` — Number of followers\n- `followingCount` — Number of accounts following\n- `tweetsCount` — Total number of tweets\n- `isVerified` — Verification status\n- `profileImageUrl` — Profile picture URL",
+                "parameters": [
+                    {
+                        "name": "X-API-Key",
+                        "in": "header",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "{{key}}"
+                    },
+                    {
+                        "name": "userNames",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "elonmusk,X"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                }
+            }
+        },
+        "/twitter/user/info": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "User info",
+                "description": "## Get User Info\n\nRetrieves complete profile information for a specified Twitter/X user by their username.\n\n### Query Parameters\n\n| Parameter | Type | Required | Description |\n|-----------|------|----------|-------------|\n| `userName` | string | ✅ Required | The Twitter/X username (without @). Example: `elonmusk` |\n\n### Example Request\n\n```\nGET {{base_url}}/twitter/user/info?userName=elonmusk\n```\n\n### Example Response\n\nReturns a user profile object containing:\n- `id` — Twitter user ID\n- `name` — Display name\n- `userName` — Username handle\n- `bio` — Profile biography\n- `location` — User's listed location\n- `website` — Profile website URL\n- `joinedDate` — Account creation date\n- `followersCount` — Number of followers\n- `followingCount` — Number of accounts following\n- `tweetsCount` — Total number of tweets\n- `isVerified` — Blue checkmark verification status\n- `profileImageUrl` — Profile picture URL\n- `bannerImageUrl` — Profile banner image URL",
+                "parameters": [
+                    {
+                        "name": "X-API-Key",
+                        "in": "header",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "{{key}}"
+                    },
+                    {
+                        "name": "userName",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "bdclassified"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                }
+            }
+        },
+        "/twitter/user/tweet_timeline": {
+            "get": {
+                "tags": [
+                    "Tweet Activity"
+                ],
+                "summary": "Get User Tweet Timeline",
+                "description": "## Get User Tweet Timeline\n\nRetrieves the tweet timeline for a specified Twitter/X user, including their tweets and retweets in chronological order.\n\n### Query Parameters\n\n| Parameter | Type | Required | Description |\n|-----------|------|----------|-------------|\n| `userName` | string | ✅ Required | The Twitter/X username (without @). Example: `elonmusk` |\n| `cursor` | string | Optional | Pagination cursor for fetching the next page of the timeline |\n\n### Example Request\n\n```\nGET {{base_url}}/twitter/user/tweet_timeline?userName=elonmusk\n```\n\n### Example Response\n\nReturns a paginated timeline of tweet objects, each containing:\n- `id` — Tweet ID\n- `text` — Tweet content\n- `author` — Author user object\n- `createdAt` — Timestamp\n- `likeCount`, `replyCount`, `retweetCount`, `viewCount` — Engagement metrics\n- `isRetweet` — Whether this is a retweet\n- `cursor` — Pagination cursor for the next page",
+                "parameters": [
+                    {
+                        "name": "X-API-Key",
+                        "in": "header",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "{{key}}"
+                    },
+                    {
+                        "name": "userName",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "elonmusk"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                }
+            }
+        },
+        "/twitter/user/last_tweets": {
+            "get": {
+                "tags": [
+                    "Tweet Activity"
+                ],
+                "summary": "Get User Last Tweets",
+                "description": "## Get User Last Tweets\n\nRetrieves the most recent tweets posted by a specified Twitter/X user.\n\n### Query Parameters\n\n| Parameter | Type | Required | Description |\n|-----------|------|----------|-------------|\n| `userName` | string | ✅ Required | The Twitter/X username (without @). Example: `elonmusk` |\n| `cursor` | string | Optional | Pagination cursor for fetching the next page of results |\n\n### Example Request\n\n```\nGET {{base_url}}/twitter/user/last_tweets?userName=elonmusk\n```\n\n### Example Response\n\nReturns a paginated list of the user's most recent tweet objects, each containing:\n- `id` — Tweet ID\n- `text` — Tweet content\n- `createdAt` — Timestamp\n- `likeCount`, `replyCount`, `retweetCount`, `viewCount` — Engagement metrics\n- `media` — Attached media (images, videos) if any\n- `cursor` — Pagination cursor for the next page",
+                "parameters": [
+                    {
+                        "name": "X-API-Key",
+                        "in": "header",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "{{key}}"
+                    },
+                    {
+                        "name": "userName",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "elonmusk"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                }
+            }
+        },
+        "/twitter/tweets": {
+            "get": {
+                "tags": [
+                    "Tweet Activity"
+                ],
+                "summary": "Get Tweets by IDs",
+                "description": "## Get Tweets by IDs\n\nRetrieves detailed information for one or more tweets by their IDs in a single batch request.\n\n### Query Parameters\n\n| Parameter | Type | Required | Description |\n|-----------|------|----------|-------------|\n| `tweet_ids` | string | ✅ Required | Comma-separated list of tweet IDs to fetch. Example: `2104402989570297895,2104396243434651759` |\n\n### Example Request\n\n```\nGET {{base_url}}/twitter/tweets?tweet_ids=2104402989570297895,2104396243434651759\n```\n\n### Notes\n- You can pass a single tweet ID or multiple IDs separated by commas.\n- Maximum recommended batch size: 100 tweet IDs per request.\n\n### Example Response\n\nReturns an array of tweet objects, each containing:\n- `id` — Tweet ID\n- `text` — Tweet content\n- `author` — Author user object (id, name, userName, followersCount)\n- `createdAt` — Timestamp\n- `likeCount`, `replyCount`, `retweetCount`, `viewCount` — Engagement metrics\n- `media` — Attached media if any\n- `urls` — Expanded URLs in the tweet",
+                "parameters": [
+                    {
+                        "name": "X-API-Key",
+                        "in": "header",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "{{key}}"
+                    },
+                    {
+                        "name": "tweet_ids",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "2104402989570297895,2104396243434651759"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                }
+            }
+        },
+        "/twitter/tweet/advanced_search": {
+            "get": {
+                "tags": [
+                    "Tweets"
+                ],
+                "summary": "Advanced Search",
+                "description": "## Advanced Tweet Search\n\nSearches for tweets using advanced query syntax, supporting filters by user, keyword, hashtag, date range, and more.\n\n### Query Parameters\n\n| Parameter | Type | Required | Description |\n|-----------|------|----------|-------------|\n| `query` | string | ✅ Required | Advanced search query string. Supports Twitter search operators. Example: `from:elonmusk starship` |\n| `queryType` | string | Optional | Sort order of results. Values: `Latest` (default) or `Top` |\n| `cursor` | string | Optional | Pagination cursor for fetching the next page of results |\n\n### Supported Query Operators\n\n| Operator | Example | Description |\n|----------|---------|-------------|\n| `from:` | `from:elonmusk` | Tweets from a specific user |\n| `to:` | `to:nasa` | Tweets replying to a user |\n| `#` | `#bitcoin` | Tweets with a specific hashtag |\n| `\"...\"` | `\"climate change\"` | Exact phrase match |\n| `-` | `-spam` | Exclude a keyword |\n| `lang:` | `lang:en` | Filter by language |\n\n### Example Request\n\n```\nGET {{base_url}}/twitter/tweet/advanced_search?query=from:elonmusk%20starship&queryType=Latest\n```\n\n### Example Response\n\nReturns a paginated list of matching tweet objects, each containing:\n- `id` — Tweet ID\n- `text` — Tweet content\n- `author` — Author user object\n- `createdAt` — Timestamp\n- `likeCount`, `replyCount`, `retweetCount`, `viewCount` — Engagement metrics\n- `cursor` — Pagination cursor for the next page",
+                "parameters": [
+                    {
+                        "name": "X-API-Key",
+                        "in": "header",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "{{key}}"
+                    },
+                    {
+                        "name": "query",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "from:elonmusk%20starship"
+                    },
+                    {
+                        "name": "queryType",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "Latest"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                }
+            }
+        },
+        "/twitter/tweet/replies/v2": {
+            "get": {
+                "tags": [
+                    "Tweet Activity"
+                ],
+                "summary": "Get Tweet Replies v2",
+                "description": "## Get Tweet Replies (v2)\n\nRetrieves replies to a specific tweet using the v2 endpoint, with support for relevance-based or latest sorting.\n\n### Query Parameters\n\n| Parameter | Type | Required | Description |\n|-----------|------|----------|-------------|\n| `tweetId` | string | ✅ Required | The unique ID of the tweet to fetch replies for. Example: `2109692430178255016` |\n| `queryType` | string | Optional | Sort order of replies. Values: `Relevance` (default) or `Latest` |\n| `cursor` | string | Optional | Pagination cursor for fetching the next page of replies |\n\n### Example Request\n\n```\nGET {{base_url}}/twitter/tweet/replies/v2?tweetId=2109692430178255016&queryType=Relevance\n```\n\n### Example Response\n\nReturns a paginated list of reply tweet objects, each containing:\n- `id` — Tweet ID\n- `text` — Reply text content\n- `author` — Author user object (id, name, userName)\n- `createdAt` — Timestamp of the reply\n- `likeCount`, `replyCount`, `retweetCount` — Engagement metrics\n- `cursor` — Pagination cursor for the next page",
+                "parameters": [
+                    {
+                        "name": "X-API-Key",
+                        "in": "header",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "{{key}}"
+                    },
+                    {
+                        "name": "tweetId",
+                        "in": "query",
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": "2109692430178255016"
+                    },
+                    {
+                        "name": "queryType",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "Relevance"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                }
+            }
+        },
+        "/twitter/tweet/quotes": {
+            "get": {
+                "tags": [
+                    "Tweet Activity"
+                ],
+                "summary": "Get Tweet Quotes",
+                "description": "## Get Tweet Quotes\n\nRetrieves a list of quote tweets for a specific tweet.\n\n### Query Parameters\n\n| Parameter | Type | Required | Description |\n|-----------|------|----------|-------------|\n| `tweetId` | string | ✅ Required | The unique ID of the tweet to fetch quote tweets for. Example: `2109692430178255016` |\n| `cursor` | string | Optional | Pagination cursor for fetching the next page of results |\n\n### Example Request\n\n```\nGET {{base_url}}/twitter/tweet/quotes?tweetId=2109692430178255016\n```\n\n### Example Response\n\nReturns a paginated list of quote tweet objects, each containing:\n- `id` — Tweet ID\n- `text` — Quote tweet text\n- `author` — Author user object\n- `quotedTweet` — The original tweet being quoted\n- `createdAt` — Timestamp\n- `likeCount`, `replyCount`, `retweetCount` — Engagement metrics\n- `cursor` — Pagination cursor for the next page",
+                "parameters": [
+                    {
+                        "name": "X-API-Key",
+                        "in": "header",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "{{key}}"
+                    },
+                    {
+                        "name": "tweetId",
+                        "in": "query",
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": "2109692430178255016"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                }
+            }
+        },
+        "/twitter/tweet/retweeters": {
+            "get": {
+                "tags": [
+                    "Tweet Activity"
+                ],
+                "summary": "Get Tweet Retweeters",
+                "description": "## Get Tweet Retweeters\n\nRetrieves a list of users who retweeted a specific tweet.\n\n### Query Parameters\n\n| Parameter | Type | Required | Description |\n|-----------|------|----------|-------------|\n| `tweetId` | string | ✅ Required | The unique ID of the tweet to fetch retweeters for. Example: `2109692430178255016` |\n| `cursor` | string | Optional | Pagination cursor for fetching the next page of results |\n\n### Example Request\n\n```\nGET {{base_url}}/twitter/tweet/retweeters?tweetId=2109692430178255016\n```\n\n### Example Response\n\nReturns a paginated list of user objects who retweeted the tweet, each containing:\n- `id` — Twitter user ID\n- `name` — Display name\n- `userName` — Username handle\n- `followersCount` — Number of followers\n- `isVerified` — Verification status\n- `cursor` — Pagination cursor for the next page",
+                "parameters": [
+                    {
+                        "name": "X-API-Key",
+                        "in": "header",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "{{key}}"
+                    },
+                    {
+                        "name": "tweetId",
+                        "in": "query",
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": "2109692430178255016"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                }
+            }
+        },
+        "/twitter/tweet/thread_context": {
+            "get": {
+                "tags": [
+                    "Tweet Activity"
+                ],
+                "summary": "Get Tweet Thread Context",
+                "description": "## Get Tweet Thread Context\n\nRetrieves the full thread context of a tweet, including parent tweets and replies in the thread chain.\n\n### Query Parameters\n\n| Parameter | Type | Required | Description |\n|-----------|------|----------|-------------|\n| `tweetId` | string | ✅ Required | The unique ID of the tweet to fetch thread context for. Example: `2104402989570297895` |\n\n### Example Request\n\n```\nGET {{base_url}}/twitter/tweet/thread_context?tweetId=2104402989570297895\n```\n\n### Example Response\n\nReturns the thread context including:\n- `tweet` — The requested tweet object\n- `ancestors` — Array of parent tweets in the thread\n- `replies` — Array of direct replies in the thread\n- Each tweet contains: `id`, `text`, `author`, `createdAt`, engagement metrics",
+                "parameters": [
+                    {
+                        "name": "X-API-Key",
+                        "in": "header",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "{{key}}"
+                    },
+                    {
+                        "name": "tweetId",
+                        "in": "query",
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": "2104402989570297895"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                }
+            }
+        },
+        "/twitter/tweet/replies": {
+            "get": {
+                "tags": [
+                    "Tweet Activity"
+                ],
+                "summary": "Get Tweet Replies",
+                "description": "## Get Tweet Replies\n\nRetrieves replies to a specific tweet.\n\n### Query Parameters\n\n| Parameter | Type | Required | Description |\n|-----------|------|----------|-------------|\n| `tweetId` | string | ✅ Required | The unique ID of the tweet to fetch replies for. Example: `1846987139428634858` |\n| `cursor` | string | Optional | Pagination cursor for fetching the next page of replies |\n\n### Example Request\n\n```\nGET {{base_url}}/twitter/tweet/replies?tweetId=1846987139428634858\n```\n\n### Example Response\n\nReturns a paginated list of reply tweet objects, each containing:\n- `id` — Tweet ID\n- `text` — Reply text content\n- `author` — Author user object (id, name, userName)\n- `createdAt` — Timestamp of the reply\n- `likeCount`, `replyCount`, `retweetCount` — Engagement metrics\n- `cursor` — Pagination cursor for the next page",
+                "parameters": [
+                    {
+                        "name": "X-API-Key",
+                        "in": "header",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "{{key}}"
+                    },
+                    {
+                        "name": "tweetId",
+                        "in": "query",
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": "1846987139428634858"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                }
+            }
+        },
+        "/twitter/user/followers/": {
+            "get": {
+                "tags": [
+                    "Follow, Followings"
+                ],
+                "summary": "Followers",
+                "description": "## Get User Followers\n\nRetrieves a paginated list of followers for a specified Twitter/X user.\n\n### Query Parameters\n\n| Parameter | Type | Required | Description |\n|-----------|------|----------|-------------|\n| `userName` | string | ✅ Required | The Twitter/X username (without @). Example: `elonmusk` |\n| `pageSize` | integer | Optional | Number of followers to return per page. Default: `200`. Max: `200` |\n| `cursor` | string | Optional | Pagination cursor returned from a previous response to fetch the next page of results |\n\n### Example Request\n\n```\nGET {{base_url}}/twitter/user/followers?userName=elonmusk&pageSize=200\n```\n\n### Example Response\n\nReturns a list of follower user objects, each containing:\n- `id` — Twitter user ID\n- `name` — Display name\n- `userName` — Username handle\n- `followersCount` — Number of followers\n- `followingCount` — Number of accounts following\n- `isVerified` — Verification status\n- `cursor` — Pagination cursor for the next page",
+                "parameters": [
+                    {
+                        "name": "x-api-key",
+                        "in": "header",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "{{key}}"
+                    },
+                    {
+                        "name": "userName",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "elonmusk"
+                    },
+                    {
+                        "name": "pageSize",
+                        "in": "query",
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": "200"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                }
+            }
+        },
+        "/twitter/user/followings": {
+            "get": {
+                "tags": [
+                    "Follow, Followings"
+                ],
+                "summary": "Get Followings",
+                "description": "## Get User Followings\n\nRetrieves a paginated list of accounts that a specified Twitter/X user is following.\n\n### Query Parameters\n\n| Parameter | Type | Required | Description |\n|-----------|------|----------|-------------|\n| `userName` | string | ✅ Required | The Twitter/X username (without @). Example: `elonmusk` |\n| `pageSize` | integer | Optional | Number of followings to return per page. Default: `200`. Max: `200` |\n| `cursor` | string | Optional | Pagination cursor returned from a previous response to fetch the next page of results |\n\n### Example Request\n\n```\nGET {{base_url}}/twitter/user/followings?userName=elonmusk&pageSize=200\n```\n\n### Example Response\n\nReturns a list of following user objects, each containing:\n- `id` — Twitter user ID\n- `name` — Display name\n- `userName` — Username handle\n- `followersCount` — Number of followers\n- `followingCount` — Number of accounts following\n- `isVerified` — Verification status\n- `cursor` — Pagination cursor for the next page",
+                "parameters": [
+                    {
+                        "name": "X-API-Key",
+                        "in": "header",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "{{key}}"
+                    },
+                    {
+                        "name": "userName",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "elonmusk"
+                    },
+                    {
+                        "name": "cursor",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "pageSize",
+                        "in": "query",
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": "200"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                }
+            }
+        },
+        "/twitter/user/followers": {
+            "get": {
+                "tags": [
+                    "Follow, Followings"
+                ],
+                "summary": "Get Followers",
+                "description": "## Get User Followers\n\nRetrieves a paginated list of followers for a specified Twitter/X user.\n\n### Query Parameters\n\n| Parameter | Type | Required | Description |\n|-----------|------|----------|-------------|\n| `userName` | string | ✅ Required | The Twitter/X username (without @). Example: `elonmusk` |\n| `pageSize` | integer | Optional | Number of followers to return per page. Default: `200`. Max: `200` |\n| `cursor` | string | Optional | Pagination cursor returned from a previous response to fetch the next page of results |\n\n### Example Request\n\n```\nGET {{base_url}}/twitter/user/followers?userName=elonmusk&pageSize=200\n```\n\n### Example Response\n\nReturns a list of follower user objects, each containing:\n- `id` — Twitter user ID\n- `name` — Display name\n- `userName` — Username handle\n- `followersCount` — Number of followers\n- `followingCount` — Number of accounts following\n- `isVerified` — Verification status\n- `cursor` — Pagination cursor for the next page",
+                "parameters": [
+                    {
+                        "name": "X-API-Key",
+                        "in": "header",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "{{key}}"
+                    },
+                    {
+                        "name": "userName",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "elonmusk"
+                    },
+                    {
+                        "name": "cursor",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "pageSize",
+                        "in": "query",
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": "200"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                }
+            }
+        },
+        "/twitter/user/mentions": {
+            "get": {
+                "tags": [
+                    "default"
+                ],
+                "summary": "Get User Mentions",
+                "description": "## Get User Mentions\n\nRetrieves a list of tweets that mention a specified Twitter/X user.\n\n### Query Parameters\n\n| Parameter | Type | Required | Description |\n|-----------|------|----------|-------------|\n| `userName` | string | ✅ Required | The Twitter/X username (without @). Example: `elonmusk` |\n| `cursor` | string | Optional | Pagination cursor for fetching the next page of mentions |\n\n### Example Request\n\n```\nGET {{base_url}}/twitter/user/mentions?userName=elonmusk\n```\n\n### Example Response\n\nReturns a paginated list of tweet objects that mention the user, each containing:\n- `id` — Tweet ID\n- `text` — Tweet content (includes the @mention)\n- `author` — Author user object (id, name, userName)\n- `createdAt` — Timestamp\n- `likeCount`, `replyCount`, `retweetCount` — Engagement metrics\n- `cursor` — Pagination cursor for the next page",
+                "parameters": [
+                    {
+                        "name": "X-API-Key",
+                        "in": "header",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "{{key}}"
+                    },
+                    {
+                        "name": "userName",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "elonmusk"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                }
+            }
+        },
+        "/twitter/article": {
+            "get": {
+                "tags": [
+                    "default"
+                ],
+                "summary": "Get Article",
+                "description": "## Get Article\n\nRetrieves a Twitter/X Article (long-form content) by its associated tweet ID.\n\n### Query Parameters\n\n| Parameter | Type | Required | Description |\n|-----------|------|----------|-------------|\n| `tweet_id` | string | ✅ Required | The tweet ID associated with the article. Example: `1905545699552375179` |\n\n### Example Request\n\n```\nGET {{base_url}}/twitter/article?tweet_id=1905545699552375179\n```\n\n### Notes\n- Twitter/X Articles are long-form posts published natively on the platform.\n- The `tweet_id` is the ID of the tweet that links to or contains the article.\n\n### Example Response\n\nReturns an article object containing:\n- `id` — Article ID\n- `title` — Article title\n- `content` — Full article content (HTML or Markdown)\n- `author` — Author user object\n- `createdAt` — Publication timestamp\n- `coverImageUrl` — Cover image URL (if any)\n- `tweetId` — Associated tweet ID",
+                "parameters": [
+                    {
+                        "name": "X-API-Key",
+                        "in": "header",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "{{key}}"
+                    },
+                    {
+                        "name": "tweet_id",
+                        "in": "query",
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": "1905545699552375179"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

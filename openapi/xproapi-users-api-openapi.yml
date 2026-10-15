@@ -1,0 +1,404 @@
+openapi: 3.2.0
+info:
+  title: Xproapi.com Users API
+  description: '## Xproapi.com
+
+
+    This collection provides a comprehensive set of endpoints for interacting with the **Xproapi.com** API — a platform for accessing X (formerly Twitter) data programmatically.'
+  version: 1.0.0
+  x-apisguru-categories:
+  - developer_tools
+  - social
+  x-logo:
+    url: https://xproapi.com/apple-touch-icon.png
+    altText: Xproapi.com
+servers:
+- url: https://xproapi.com/api
+tags:
+- name: Users
+paths:
+  /twitter/user_about:
+    get:
+      tags:
+      - Users
+      summary: Get User Profile About
+      description: '## Get User Profile About
+
+
+        Retrieves extended profile information and "About" section details for a specified Twitter/X user.
+
+
+        ### Query Parameters
+
+
+        | Parameter | Type | Required | Description |
+
+        |-----------|------|----------|-------------|
+
+        | `userName` | string | ✅ Required | The Twitter/X username (without @). Example: `elonmusk` |
+
+
+        ### Example Request
+
+
+        ```
+
+        GET {{base_url}}/twitter/user_about?userName=elonmusk
+
+        ```
+
+
+        ### Example Response
+
+
+        Returns extended user profile data including:
+
+        - `id` — Twitter user ID
+
+        - `name` — Display name
+
+        - `userName` — Username handle
+
+        - `bio` — Profile biography
+
+        - `location` — User''s listed location
+
+        - `website` — Profile website URL
+
+        - `joinedDate` — Account creation date
+
+        - `followersCount` — Number of followers
+
+        - `followingCount` — Number of accounts following
+
+        - `tweetsCount` — Total number of tweets
+
+        - `isVerified` — Verification status
+
+        - `pinnedTweet` — The user''s pinned tweet (if any)'
+      parameters:
+      - name: X-API-Key
+        in: header
+        schema:
+          type: string
+        example: '{{key}}'
+      - name: userName
+        in: query
+        schema:
+          type: string
+        example: elonmusk
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+      operationId: getTwitterUserAbout
+      x-operation-id-source: derived
+  /twitter/user/search:
+    get:
+      tags:
+      - Users
+      summary: Search Users
+      description: '## Search Users
+
+
+        Searches for Twitter/X users matching a given query string.
+
+
+        ### Query Parameters
+
+
+        | Parameter | Type | Required | Description |
+
+        |-----------|------|----------|-------------|
+
+        | `query` | string | ✅ Required | Search query to find users. Can be a name, username, or keyword. Example: `bitcoin` |
+
+        | `cursor` | string | Optional | Pagination cursor for fetching the next page of results |
+
+
+        ### Example Request
+
+
+        ```
+
+        GET {{base_url}}/twitter/user/search?query=bitcoin&cursor=
+
+        ```
+
+
+        ### Example Response
+
+
+        Returns a paginated list of user objects matching the query, each containing:
+
+        - `id` — Twitter user ID
+
+        - `name` — Display name
+
+        - `userName` — Username handle
+
+        - `bio` — Profile biography
+
+        - `followersCount` — Number of followers
+
+        - `isVerified` — Verification status
+
+        - `cursor` — Pagination cursor for the next page'
+      parameters:
+      - name: X-API-Key
+        in: header
+        schema:
+          type: string
+        example: '{{key}}'
+      - name: query
+        in: query
+        schema:
+          type: string
+        example: bitcoin
+      - name: cursor
+        in: query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+      operationId: getTwitterUserSearch
+      x-operation-id-source: derived
+  /twitter/user/batch_info_by_ids:
+    get:
+      tags:
+      - Users
+      summary: Batch User info by userids
+      description: '## Batch User Info by User IDs
+
+
+        Retrieves profile information for multiple Twitter/X users in a single request using their numeric user IDs.
+
+
+        ### Query Parameters
+
+
+        | Parameter | Type | Required | Description |
+
+        |-----------|------|----------|-------------|
+
+        | `userIds` | string | ✅ Required | Comma-separated list of numeric Twitter user IDs. Example: `1655837182773563392,3295112503` |
+
+
+        ### Example Request
+
+
+        ```
+
+        GET {{base_url}}/twitter/user/batch_info_by_ids?userIds=1655837182773563392,3295112503
+
+        ```
+
+
+        ### Notes
+
+        - You can pass a single user ID or multiple IDs separated by commas.
+
+        - Maximum recommended batch size: 100 user IDs per request.
+
+
+        ### Example Response
+
+
+        Returns an array of user profile objects, each containing:
+
+        - `id` — Twitter user ID
+
+        - `name` — Display name
+
+        - `userName` — Username handle
+
+        - `bio` — Profile biography
+
+        - `followersCount` — Number of followers
+
+        - `followingCount` — Number of accounts following
+
+        - `tweetsCount` — Total number of tweets
+
+        - `isVerified` — Verification status
+
+        - `profileImageUrl` — Profile picture URL'
+      parameters:
+      - name: X-API-Key
+        in: header
+        schema:
+          type: string
+        example: '{{key}}'
+      - name: userIds
+        in: query
+        schema:
+          type: string
+        example: 1655837182773563392,3295112503
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+      operationId: getTwitterUserBatchInfoByIds
+      x-operation-id-source: derived
+  /twitter/user/batch_info_by_usernames:
+    get:
+      tags:
+      - Users
+      summary: Batch User Info by Usernames
+      description: '## Batch User Info by Usernames
+
+
+        Retrieves profile information for multiple Twitter/X users in a single request using their usernames.
+
+
+        ### Query Parameters
+
+
+        | Parameter | Type | Required | Description |
+
+        |-----------|------|----------|-------------|
+
+        | `userNames` | string | ✅ Required | Comma-separated list of Twitter usernames (without @). Example: `elonmusk,X` |
+
+
+        ### Example Request
+
+
+        ```
+
+        GET {{base_url}}/twitter/user/batch_info_by_usernames?userNames=elonmusk,X
+
+        ```
+
+
+        ### Notes
+
+        - You can pass a single username or multiple usernames separated by commas.
+
+        - Maximum recommended batch size: 100 usernames per request.
+
+
+        ### Example Response
+
+
+        Returns an array of user profile objects, each containing:
+
+        - `id` — Twitter user ID
+
+        - `name` — Display name
+
+        - `userName` — Username handle
+
+        - `bio` — Profile biography
+
+        - `followersCount` — Number of followers
+
+        - `followingCount` — Number of accounts following
+
+        - `tweetsCount` — Total number of tweets
+
+        - `isVerified` — Verification status
+
+        - `profileImageUrl` — Profile picture URL'
+      parameters:
+      - name: X-API-Key
+        in: header
+        schema:
+          type: string
+        example: '{{key}}'
+      - name: userNames
+        in: query
+        schema:
+          type: string
+        example: elonmusk,X
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+      operationId: getTwitterUserBatchInfoByUsernames
+      x-operation-id-source: derived
+  /twitter/user/info:
+    get:
+      tags:
+      - Users
+      summary: User info
+      description: '## Get User Info
+
+
+        Retrieves complete profile information for a specified Twitter/X user by their username.
+
+
+        ### Query Parameters
+
+
+        | Parameter | Type | Required | Description |
+
+        |-----------|------|----------|-------------|
+
+        | `userName` | string | ✅ Required | The Twitter/X username (without @). Example: `elonmusk` |
+
+
+        ### Example Request
+
+
+        ```
+
+        GET {{base_url}}/twitter/user/info?userName=elonmusk
+
+        ```
+
+
+        ### Example Response
+
+
+        Returns a user profile object containing:
+
+        - `id` — Twitter user ID
+
+        - `name` — Display name
+
+        - `userName` — Username handle
+
+        - `bio` — Profile biography
+
+        - `location` — User''s listed location
+
+        - `website` — Profile website URL
+
+        - `joinedDate` — Account creation date
+
+        - `followersCount` — Number of followers
+
+        - `followingCount` — Number of accounts following
+
+        - `tweetsCount` — Total number of tweets
+
+        - `isVerified` — Blue checkmark verification status
+
+        - `profileImageUrl` — Profile picture URL
+
+        - `bannerImageUrl` — Profile banner image URL'
+      parameters:
+      - name: X-API-Key
+        in: header
+        schema:
+          type: string
+        example: '{{key}}'
+      - name: userName
+        in: query
+        schema:
+          type: string
+        example: bdclassified
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+      operationId: getTwitterUserInfo
+      x-operation-id-source: derived
