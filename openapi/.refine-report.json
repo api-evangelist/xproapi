@@ -1,7 +1,7 @@
 {
   "provider": "xproapi",
   "sources": [
-    "xproapi-openapi.json"
+    "_original/xproapi-openapi.json"
   ],
   "outputs": [
     "xproapi-follow-followings-api-openapi.yml",
@@ -10,15 +10,20 @@
     "xproapi-users-api-openapi.yml",
     "xproapi-default-api-openapi.yml"
   ],
-  "archived": [
-    "archived openapi/xproapi-openapi.json"
-  ],
+  "archived": [],
   "errors": [],
   "warnings": [],
   "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
     "xproapi-openapi.json: upgraded openapi 3.0.0 -> OpenAPI 3.2.0",
     "xproapi-openapi.json: declared missing tag: default",
-    "apis.yml register: written (+5 apis, 5 total)"
+    "apis.yml register: already-registered"
   ],
-  "skipped": []
+  "skipped": [
+    "xproapi-default-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "xproapi-follow-followings-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "xproapi-tweet-activity-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "xproapi-tweets-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "xproapi-users-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }
